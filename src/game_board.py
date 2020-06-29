@@ -3,6 +3,11 @@
 def board_square_click(playerName, button):
     if button['text'] == ' ':
         button['text'] = playerName
+        # TODO add logic here to identify which question to pull up
+        # TODO this can be done using the background color
+        # print(button['highlightbackground'])
+        # TODO reverse engineer how to get color name from color hex
+
     elif button['text'] != ' ':
         button['text'] = ' '
 

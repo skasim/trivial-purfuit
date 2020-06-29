@@ -64,7 +64,7 @@ label_p4s.grid(row=4, column=5, sticky='e')
 # die roll
 die_label = Label(root, text=' ', font=helvetica_60)
 die_label.grid(row=5, column=2, sticky='e')
-die_button = Button(root, text='Roll Die', fg=Color.BLACK.description, command=lambda: roll_die(die_label))
+die_button = Button(root, text='Roll Die', font=helvetica_20, fg=Color.BLACK.description, command=lambda: roll_die(die_label))
 die_button.grid(row=5, column=1, sticky='e')
 
 # create the game board
