@@ -6,7 +6,8 @@ def board_square_click(playerName, button):
         # TODO add logic here to identify which question to pull up
         # TODO this can be done using the background color
         # print(button['highlightbackground'])
-        # TODO reverse engineer how to get color name from color hex
+        # print(color_enum.ORANGE.name.lower())
+        # print(color_enum.ORANGE.color)
 
     elif button['text'] != ' ':
         button['text'] = ' '

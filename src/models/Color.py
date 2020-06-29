@@ -14,3 +14,21 @@ class Color(namedtuple('color', 'color description'), Enum):
 
     def __str__(self) -> str:
         return self.name
+
+    def return_color_from_hex(self):
+        if self == Color.RED.description:
+            return Color.RED.color
+        elif self == Color.WHITE.description:
+            return Color.WHITE.color
+        elif self == Color.BLUE.description:
+            return Color.BLUE.color
+        elif self == Color.GREEN.description:
+            return Color.GREEN.color
+        elif self == Color.ORANGE.description:
+            return Color.ORANGE.color
+        elif self == Color.ORANGE.description:
+            return Color.ORANGE.color
+        elif self == Color.YELLOW.description:
+            return Color.YELLOW.color
+        elif self == Color.BLACK.description:
+            return Color.BLACK.color
