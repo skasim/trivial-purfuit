@@ -36,6 +36,13 @@ p2 = Player('player2')
 p3 = Player('player3')
 p4 = Player('player4')
 
+names = {
+    1: player1,
+    2: player2,
+    3: player3,
+    4: player4
+}
+
 players = {
     1: p1,
     2: p2,
@@ -95,6 +102,7 @@ create_game_board(
     start_row=start_row,
     sq_dim=sq_dim,
     color_enum=Color,
+    names_dict=names,
     players_dict=players,
     turn=turn
 )
