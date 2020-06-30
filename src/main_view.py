@@ -4,6 +4,8 @@ from tkinter.font import Font
 from src.die_roll import roll_die
 from src.game_board import create_game_board
 from src.models.Color import Color
+from src.models.Player import Player
+from src.models.Turn import Turn
 
 root = Tk()
 root.title("Trivial Purfuit by Software Titans")
@@ -26,6 +28,20 @@ player3_name = Entry(root, textvariable=player3, bd=5)
 player3_name.grid(row=3, column=1, columnspan=8, sticky='w')
 player4_name = Entry(root, textvariable=player4, bd=5)
 player4_name.grid(row=4, column=1, columnspan=8, sticky='w')
+
+# instantiate players, turn and player objects
+turn = Turn()
+p1 = Player('player1')
+p2 = Player('player2')
+p3 = Player('player3')
+p4 = Player('player4')
+
+players = {
+    1: p1,
+    2: p2,
+    3: p3,
+    4: p4
+}
 
 # player name labels
 label_p1 = Label(root, text="Player 1:", font=helvetica_20, bg=Color.YELLOW.description, fg=Color.BLACK.description,
@@ -64,7 +80,8 @@ label_p4s.grid(row=4, column=5, sticky='e')
 # die roll
 die_label = Label(root, text=' ', font=helvetica_60)
 die_label.grid(row=5, column=2, sticky='e')
-die_button = Button(root, text='Roll Die', font=helvetica_20, fg=Color.BLACK.description, command=lambda: roll_die(die_label))
+die_button = Button(root, text='Roll Die', font=helvetica_20, fg=Color.BLACK.description,
+                    command=lambda: roll_die(die_label))
 die_button.grid(row=5, column=1, sticky='e')
 
 # create the game board
@@ -78,6 +95,8 @@ create_game_board(
     start_row=start_row,
     sq_dim=sq_dim,
     color_enum=Color,
-    player1=player1)
+    players_dict=players,
+    turn=turn
+)
 
 root.mainloop()
