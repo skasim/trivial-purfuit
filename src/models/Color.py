@@ -4,7 +4,7 @@ from enum import Enum
 
 class Color(namedtuple('color', 'color description'), Enum):
     RED = 'red', '#FF6347'
-    WHITE = 'white', '#FFF5C3'
+    WHITE = 'white', '#FFFFFF'
     BLUE = 'blue', '#3333FF'
     GREEN = 'green', '#2C6700'
     ORANGE = 'orange', '#FF9900'
