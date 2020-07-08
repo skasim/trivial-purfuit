@@ -1,10 +1,13 @@
 import tkinter as tk
 # https://stackoverflow.com/a/49681192/4882806 TODO MUST REFERENCE
+from src.die_roll import roll_die
 from src.game_board import create_game_board
 from src.models.Color import Color
 from src.models.Player import Player
 from src.models.Turn import Turn
 from tkinter.font import Font
+
+from src.top_view import create_top_view
 
 LABEL_BG = "#ccc"  # Light gray.
 ROWS, COLS = 20, 20  # Size of grid.
@@ -24,17 +27,75 @@ class MyApp(tk.Tk):
         master_frame.grid(sticky=tk.NSEW)
         master_frame.columnconfigure(0, weight=1)
 
+
+        # create a frame for name entry and die roll
+        frame1 = tk.Frame(master_frame)
+        frame1.grid(row=3, column=0, sticky=tk.NW)
+
+        # add cavas to this frame
+        canvas1 = tk.Canvas(frame1, bg='yellow')
+        canvas1.grid(row=0, column=0)
+
+
+        entry_frame = tk.Frame(canvas1, bg='green', bd=2)
+
+        # Get player names and store them in variables
+        player1 = tk.StringVar()
+        player2 = tk.StringVar()
+        player3 = tk.StringVar()
+        player4 = tk.StringVar()
+
+        player1_name = tk.Entry(entry_frame, textvariable=player1, bd=5)
+        player1_name.grid(row=1, column=1, columnspan=8, sticky='w')
+        player2_name = tk.Entry(entry_frame, textvariable=player2, bd=5)
+        player2_name.grid(row=2, column=1, columnspan=8, sticky='w')
+        player3_name = tk.Entry(entry_frame, textvariable=player3, bd=5)
+        player3_name.grid(row=3, column=1, columnspan=8, sticky='w')
+        player4_name = tk.Entry(entry_frame, textvariable=player4, bd=5)
+        player4_name.grid(row=4, column=1, columnspan=8, sticky='w')
+
+        # instantiate players, turn and player objects
+        turn = Turn()
+        p1 = Player('player1')
+        p2 = Player('player2')
+        p3 = Player('player3')
+        p4 = Player('player4')
+
+
+        names = {
+            1: player1,
+            2: player2,
+            3: player3,
+            4: player4
+        }
+
+        players = {
+            1: p1,
+            2: p2,
+            3: p3,
+            4: p4
+        }
+
+        create_top_view(
+            tk=tk,
+            entry_frame=entry_frame,
+            Color=Color,
+        )
+
+        canvas1.create_window((0,0), window=entry_frame, anchor=tk.NW)
+        entry_frame.update_idletasks()
+
         # Create a frame for the canvas and scrollbar(s).
         frame2 = tk.Frame(master_frame)
-        frame2.grid(row=3, column=0, sticky=tk.NW)
+        frame2.grid(row=10, column=0, sticky=tk.NW)
 
         # Add a canvas in that frame.
         canvas = tk.Canvas(frame2, bg="Yellow")
-        canvas.grid(row=0, column=0)
+        canvas.grid(row=10, column=0)
 
         # Create a vertical scrollbar linked to the canvas.
         vsbar = tk.Scrollbar(frame2, orient=tk.VERTICAL, command=canvas.yview)
-        vsbar.grid(row=0, column=1, sticky=tk.NS)
+        vsbar.grid(row=10, column=1, sticky=tk.NS)
         canvas.configure(yscrollcommand=vsbar.set)
 
         # Create a horizontal scrollbar linked to the canvas.
@@ -47,26 +108,6 @@ class MyApp(tk.Tk):
 
         # Add the buttons to the frame.
 
-
-        turn = Turn()
-        p1 = Player('player1')
-        p2 = Player('player2')
-        p3 = Player('player3')
-        p4 = Player('player4')
-
-        names = {
-            1: 'joe',
-            2: 'larry',
-            3: 'curly',
-            4: 'moe'
-        }
-
-        players = {
-            1: p1,
-            2: p2,
-            3: p3,
-            4: p4
-        }
 
         helvetica_20 = Font(family='Helvetica', size=20, weight='bold')
 
