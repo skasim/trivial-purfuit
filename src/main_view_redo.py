@@ -1,22 +1,27 @@
 import tkinter as tk
 # https://stackoverflow.com/a/49681192/4882806 TODO MUST REFERENCE
 from src.die_roll import roll_die
+from src.die_roll_view import create_die_roll
 from src.game_board import create_game_board
 from src.models.Color import Color
 from src.models.Player import Player
 from src.models.Turn import Turn
 from tkinter.font import Font
 
+from src.slices_view import create_slices
 from src.top_view import create_top_view
 
 LABEL_BG = "#ccc"  # Light gray.
-ROWS, COLS = 20, 20  # Size of grid.
+ROWS, COLS = 25, 25  # Size of grid.
 ROWS_DISP = 15  # Number of rows to display.
 COLS_DISP = 20  # Number of columns to display.
 
 class MyApp(tk.Tk):
     def __init__(self, title="Sample App", *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
+
+        helvetica_20 = Font(family='Helvetica', size=20, weight='bold')
+        helvetica_60 = Font(family='Helvetica', size=60, weight='bold')
 
         self.title(title)
         self.configure(background="Gray")
@@ -27,17 +32,15 @@ class MyApp(tk.Tk):
         master_frame.grid(sticky=tk.NSEW)
         master_frame.columnconfigure(0, weight=1)
 
+        # create a frame for name entry
+        frame_entry = tk.Frame(master_frame)
+        frame_entry.grid(row=3, column=0, sticky=tk.NW)
 
-        # create a frame for name entry and die roll
-        frame1 = tk.Frame(master_frame)
-        frame1.grid(row=3, column=0, sticky=tk.NW)
+        # add canvas to this frame
+        canvas_entry = tk.Canvas(frame_entry, bg=Color.LIGHT_BLUE.description, borderwidth=0, highlightthickness=0)
+        canvas_entry.grid(row=0, column=0)
 
-        # add cavas to this frame
-        canvas1 = tk.Canvas(frame1, bg='yellow')
-        canvas1.grid(row=0, column=0)
-
-
-        entry_frame = tk.Frame(canvas1, bg='green', bd=2)
+        entry_frame = tk.Frame(canvas_entry, bg=Color.LIGHT_BLUE.description, bd=1)
 
         # Get player names and store them in variables
         player1 = tk.StringVar()
@@ -61,7 +64,6 @@ class MyApp(tk.Tk):
         p3 = Player('player3')
         p4 = Player('player4')
 
-
         names = {
             1: player1,
             2: player2,
@@ -82,34 +84,73 @@ class MyApp(tk.Tk):
             Color=Color,
         )
 
-        canvas1.create_window((0,0), window=entry_frame, anchor=tk.NW)
+        canvas_entry.create_window((0, 0), window=entry_frame, anchor=tk.NW)
         entry_frame.update_idletasks()
 
+        # creat slices frame
+
+        frame_slices = tk.Frame(master_frame)
+        frame_slices.grid(row=3, column=1, sticky=tk.NW)
+
+        # add canvas to this frame
+        canvas_slices = tk.Canvas(frame_slices, bg=Color.LIGHT_BLUE.description, borderwidth=0, highlightthickness=0)
+        canvas_slices.grid(row=0, column=0)
+
+        slices_frame = tk.Frame(canvas_slices, bg=Color.LIGHT_BLUE.description, bd=1)
+
+        create_slices(
+            tk=tk,
+            frame=slices_frame,
+            helvetica_20=helvetica_20,
+            Color=Color
+        )
+
+        canvas_slices.create_window((0,1), window=slices_frame, anchor=tk.NW)
+        slices_frame.update_idletasks()
+
+        # create frame for die roll
+        frame_die_roll = tk.Frame(master_frame)
+        frame_die_roll.grid(row=10, column=1, sticky=tk.NW) #used to be row=4
+
+        # add cavas to this frame
+        canvas_die_roll = tk.Canvas(frame_die_roll, bg=Color.LIGHT_BLUE.description, borderwidth=0, highlightthickness=0)
+        canvas_die_roll.grid(row=0, column=0)
+
+        die_roll_frame = tk.Frame(canvas_die_roll, bg=Color.LIGHT_BLUE.description, bd=1)
+
+        create_die_roll(
+            tk=tk,
+            frame=die_roll_frame,
+            helvetica_20=helvetica_20,
+            helvetica_60=helvetica_60,
+            Color=Color
+        )
+
+        canvas_die_roll.create_window((0, 0), window=die_roll_frame, anchor=tk.NW)
+        die_roll_frame.update_idletasks()
+
         # Create a frame for the canvas and scrollbar(s).
-        frame2 = tk.Frame(master_frame)
-        frame2.grid(row=10, column=0, sticky=tk.NW)
+        frame_board_game = tk.Frame(master_frame)
+        frame_board_game.grid(row=10, column=0, sticky=tk.NW)
 
         # Add a canvas in that frame.
-        canvas = tk.Canvas(frame2, bg="Yellow")
-        canvas.grid(row=10, column=0)
+        canvas_board_game = tk.Canvas(frame_board_game, bg="brown")
+        canvas_board_game.grid(row=10, column=0)
 
         # Create a vertical scrollbar linked to the canvas.
-        vsbar = tk.Scrollbar(frame2, orient=tk.VERTICAL, command=canvas.yview)
+        vsbar = tk.Scrollbar(frame_board_game, orient=tk.VERTICAL, command=canvas_board_game.yview)
         vsbar.grid(row=10, column=1, sticky=tk.NS)
-        canvas.configure(yscrollcommand=vsbar.set)
+        canvas_board_game.configure(yscrollcommand=vsbar.set)
 
         # Create a horizontal scrollbar linked to the canvas.
-        hsbar = tk.Scrollbar(frame2, orient=tk.HORIZONTAL, command=canvas.xview)
+        hsbar = tk.Scrollbar(frame_board_game, orient=tk.HORIZONTAL, command=canvas_board_game.xview)
         hsbar.grid(row=1, column=0, sticky=tk.EW)
-        canvas.configure(xscrollcommand=hsbar.set)
+        canvas_board_game.configure(xscrollcommand=hsbar.set)
 
         # Create a frame on the canvas to contain the buttons.
-        buttons_frame = tk.Frame(canvas, bg="light blue", bd=2)
+        buttons_frame = tk.Frame(canvas_board_game, bg=Color.LIGHT_BLUE.description, bd=1)
 
         # Add the buttons to the frame.
-
-
-        helvetica_20 = Font(family='Helvetica', size=20, weight='bold')
 
         create_game_board(
             tk_button=tk.Button,
@@ -124,16 +165,16 @@ class MyApp(tk.Tk):
         )
 
         # Create canvas window to hold the buttons_frame.
-        canvas.create_window((0,0), window=buttons_frame, anchor=tk.NW)
+        canvas_board_game.create_window((0, 0), window=buttons_frame, anchor=tk.NW)
 
         buttons_frame.update_idletasks()  # Needed to make bbox info available.
-        bbox = canvas.bbox(tk.ALL)  # Get bounding box of canvas with Buttons.
+        bbox = canvas_board_game.bbox(tk.ALL)  # Get bounding box of canvas with Buttons.
 
         # Define the scrollable region as entire canvas with only the desired
         # number of rows and columns displayed.
-        w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
-        dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
-        canvas.configure(scrollregion=bbox, width=dw, height=dh)
+        w, h = bbox[2] - bbox[1], bbox[3] - bbox[1]
+        dw, dh = int((w / COLS) * COLS_DISP), int((h / ROWS) * ROWS_DISP)
+        canvas_board_game.configure(scrollregion=bbox, width=dw, height=dh)
 
 
 if __name__ == "__main__":
