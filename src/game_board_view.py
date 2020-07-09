@@ -1,6 +1,9 @@
-# TODO *must* reference tic-tac-toe game
-#  ref https://github.com/abhishek305/Tic-Tac-Toe-Game-in-python-3-Tkinter/blob/master/my%20tic%20tac%202.py
 import re
+
+'''
+The button system for our board game was inspired by abhishek305. “abhishek305/Tic-Tac-Toe-Game-in-Python-3-Tkinter.” 
+GitHub, github.com/abhishek305/Tic-Tac-Toe-Game-in-python-3-Tkinter/blob/master/my tic tac 2.py.
+'''
 
 
 def add_player_names_to_player_objects(players, names):
@@ -16,6 +19,8 @@ def board_square_click(players, names, turn, button):
     board_labels = {'Roll Again', 'CENTER', 'RED', 'WHITE', 'GREEN', 'BLUE'}
     if button['text'] == ' ' and not (button['text'] in board_labels):
         button['text'] = players[turn.player_turn].name
+        button['text'] = '{}\n{}'.format(players[turn.player_turn].name,
+                                         players[turn.player_turn].slices.get_slices_won())
         # TODO add logic here to identify which question to pull up
         # TODO this can be done using the background color
         # print(button['highlightbackground'])
