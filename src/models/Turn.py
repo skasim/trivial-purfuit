@@ -12,10 +12,3 @@ class Turn(object):
             self._player_turn = self._player_turn + 1
         else:
             self._player_turn = 1
-
-# TODO delete
-# turn = Turn()
-#
-# print(str(turn.player_turn))
-# turn.player_turn = 4 # this is how you pass values to an attribue in python
-# print(turn.player_turn)

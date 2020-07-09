@@ -11,6 +11,9 @@ class Color(namedtuple('color', 'color description'), Enum):
     PURPLE = 'purple', '#CC99CC'
     YELLOW = 'yellow', '#FFFF66'
     BLACK = 'black', '#000000'
+    LIGHT_BLUE = 'light blue', '#ADD8E6'
+    LIGHT_GREEN = 'light green', '#90EE90'
+    LIGHT_PURPLE = 'light purple', '#E0BBE4'
 
     def __str__(self) -> str:
         return self.name
@@ -32,3 +35,9 @@ class Color(namedtuple('color', 'color description'), Enum):
             return Color.YELLOW.color
         elif self == Color.BLACK.description:
             return Color.BLACK.color
+        elif self == Color.LIGHT_BLUE.description:
+            return Color.LIGHT_BLUE.color
+        elif self == Color.LIGHT_GREEN.description:
+            return Color.LIGHT_GREEN.color
+        elif self == Color.LIGHT_PURPLE.description:
+            return Color.LIGHT_PURPLE.color
