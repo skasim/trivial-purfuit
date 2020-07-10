@@ -7,7 +7,7 @@ class Color(namedtuple('color', 'color description'), Enum):
     Enum representing Color string and hex value
     """
     RED = 'red', '#FF6347'
-    WHITE = 'white', '#FFF5C3'
+    WHITE = 'white', '#FFFFFF'
     BLUE = 'blue', '#3333FF'
     GREEN = 'green', '#2C6700'
     ORANGE = 'orange', '#FF9900'
