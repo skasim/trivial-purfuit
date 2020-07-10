@@ -3,6 +3,9 @@ from enum import Enum
 
 
 class Color(namedtuple('color', 'color description'), Enum):
+    """
+    Enum representing Color string and hex value
+    """
     RED = 'red', '#FF6347'
     WHITE = 'white', '#FFF5C3'
     BLUE = 'blue', '#3333FF'
@@ -19,6 +22,12 @@ class Color(namedtuple('color', 'color description'), Enum):
         return self.name
 
     def return_color_from_hex(self):
+        """
+        Method takes the enum description (i.e., hex value) and return color
+
+        :return: Color
+        :rtype: str
+        """
         if self == Color.RED.description:
             return Color.RED.color
         elif self == Color.WHITE.description:

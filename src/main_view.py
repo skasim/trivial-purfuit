@@ -8,18 +8,22 @@ from tkinter.font import Font
 
 from src.entry_view import create_entry_view
 
-'''
+"""
 The code related to organizing canvases within frames and adding scroll bars is from 
 user3300676user3300676 15722 gold badges22 silver badges77 bronze badges, et al. “Tkinter Canvas Scrollbar with Grid?” 
 Stack Overflow, 1 Nov. 1966, stackoverflow.com/a/49681192/4882806.
-'''
+"""
 
-ROWS, COLS = 25, 25  # size of grid
-ROWS_DISP = 15  # number of rows to display
-COLS_DISP = 20  # number of columns to display
+ROWS, COLUMNS = 25, 25  # size of grid
+DISPLAY_ROWS = 15  # number of rows to display
+DISPLAY_COLUMNS = 20  # number of columns to display
 
 
 class TrivialPurfuit(tk.Tk):
+    """
+    Main class for the TrivialPurfuit game app
+    """
+
     def __init__(self, title, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
@@ -90,7 +94,6 @@ class TrivialPurfuit(tk.Tk):
         create_entry_view(
             tk=tk,
             entry_frame=entry_frame,
-            color=Color,
         )
 
         canvas_entry.create_window((0, 0), window=entry_frame, anchor=tk.NW)
@@ -112,9 +115,7 @@ class TrivialPurfuit(tk.Tk):
 
         create_die_roll(
             tk=tk,
-            frame=die_roll_frame,
-            color=Color
-        )
+            frame=die_roll_frame)
 
         canvas_die_roll.create_window((0, 0), window=die_roll_frame, anchor=tk.NW)
         die_roll_frame.update_idletasks()
@@ -128,27 +129,26 @@ class TrivialPurfuit(tk.Tk):
         canvas_board_game.grid(row=10, column=0)
 
         # create vertical scroll bar
-        vsbar = tk.Scrollbar(frame_board_game, orient=tk.VERTICAL, command=canvas_board_game.yview)
-        vsbar.grid(row=10, column=1, sticky=tk.NS)
-        canvas_board_game.configure(yscrollcommand=vsbar.set)
+        vertical_scroll = tk.Scrollbar(frame_board_game, orient=tk.VERTICAL, command=canvas_board_game.yview)
+        vertical_scroll.grid(row=10, column=1, sticky=tk.NS)
+        canvas_board_game.configure(yscrollcommand=vertical_scroll.set)
 
         # create horizontal scroll bar
-        hsbar = tk.Scrollbar(frame_board_game, orient=tk.HORIZONTAL, command=canvas_board_game.xview)
-        hsbar.grid(row=1, column=0, sticky=tk.EW)
-        canvas_board_game.configure(xscrollcommand=hsbar.set)
+        horizontal_scroll = tk.Scrollbar(frame_board_game, orient=tk.HORIZONTAL, command=canvas_board_game.xview)
+        horizontal_scroll.grid(row=1, column=0, sticky=tk.EW)
+        canvas_board_game.configure(xscrollcommand=horizontal_scroll.set)
 
         # create a frame for the board game
         buttons_frame = tk.Frame(canvas_board_game, bg=Color.LIGHT_BLUE.description, bd=1)
 
         create_game_board(
             tk_button=tk.Button,
-            root_window=buttons_frame,
+            frame=buttons_frame,
             font_type=helvetica_20,
             start_row=0,
             sq_dim=7,
-            color_enum=Color,
-            names_dict=names,
-            players_dict=players,
+            names=names,
+            players=players,
             turn=turn
         )
 
@@ -159,7 +159,7 @@ class TrivialPurfuit(tk.Tk):
 
         # define the scrollable region
         w, h = bbox[2] - bbox[1], bbox[3] - bbox[1]
-        dw, dh = int((w / COLS) * COLS_DISP), int((h / ROWS) * ROWS_DISP)
+        dw, dh = int((w / COLUMNS) * DISPLAY_COLUMNS), int((h / ROWS) * DISPLAY_ROWS)
         canvas_board_game.configure(scrollregion=bbox, width=dw, height=dh)
 
 
