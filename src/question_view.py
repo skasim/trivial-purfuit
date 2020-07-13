@@ -19,4 +19,3 @@ def create_question_view(tk, question_frame):
                                 fg=Color.BLACK.description)
     question_button.grid(row=1, column=0, sticky=tk.W)
 
-    #TEST CHANGE
