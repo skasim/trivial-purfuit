@@ -7,6 +7,7 @@ from src.models.Turn import Turn
 from tkinter.font import Font
 
 from src.entry_view import create_entry_view
+from src.question_view import create_question_view
 
 """
 The code related to organizing canvases within frames and adding scroll bars is from 
@@ -50,6 +51,17 @@ class TrivialPurfuit(tk.Tk):
         canvas_entry.grid(row=0, column=0)
 
         entry_frame = tk.Frame(canvas_entry, bg=Color.LIGHT_GREEN.description, bd=1)
+
+        # Create a frame for question view
+        question_view = tk.Frame(main_frame)
+        question_view.grid(row=3, column=1, sticky=tk.NW)
+
+        # Add canvas to the question view frame
+        question_view_canvas = tk.Canvas(question_view, bg=Color.LIGHT_GREEN.description, borderwidth=0,
+                                         highlightthickness=0)
+        question_view_canvas.grid(row=0, column=0)
+
+        question_frame = tk.Frame(question_view_canvas, bg=Color.LIGHT_GREEN.description, bd=1)
 
         # Get player names and store them in variables
         player1 = tk.StringVar()
@@ -98,6 +110,14 @@ class TrivialPurfuit(tk.Tk):
 
         canvas_entry.create_window((0, 0), window=entry_frame, anchor=tk.NW)
         entry_frame.update_idletasks()
+
+        create_question_view(
+            tk=tk,
+            question_frame=question_frame,
+        )
+
+        question_view_canvas.create_window((0, 0), window=question_frame, anchor=tk.NW)
+        question_frame.update_idletasks()
 
         '''
         Create frame for the die roll section of the main view
@@ -166,3 +186,4 @@ class TrivialPurfuit(tk.Tk):
 if __name__ == "__main__":
     app = TrivialPurfuit("Trivial Purfuit by Software Titans")
     app.mainloop()
+
