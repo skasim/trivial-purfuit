@@ -111,7 +111,7 @@ class TrivialPurfuit(tk.Tk):
         canvas_entry.create_window((0, 0), window=entry_frame, anchor=tk.NW)
         entry_frame.update_idletasks()
 
-        create_question_view(
+        question_label = create_question_view(
             tk=tk,
             question_frame=question_frame,
         )
@@ -135,7 +135,8 @@ class TrivialPurfuit(tk.Tk):
 
         create_die_roll(
             tk=tk,
-            frame=die_roll_frame)
+            frame=die_roll_frame
+        )
 
         canvas_die_roll.create_window((0, 0), window=die_roll_frame, anchor=tk.NW)
         die_roll_frame.update_idletasks()
@@ -164,6 +165,7 @@ class TrivialPurfuit(tk.Tk):
         create_game_board(
             tk_button=tk.Button,
             frame=buttons_frame,
+            question_label=question_label,
             font_type=helvetica_20,
             start_row=0,
             sq_dim=7,
