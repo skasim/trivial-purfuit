@@ -20,5 +20,5 @@ def create_question_view(tk, question_frame):
         messagebox.askyesno("Answer", "The Answer is George Washington. Did you get it correct?")
         
     question_button = tk.Button(question_frame, text='Show Answer', font=helvetica_20, bg=Color.LIGHT_GREEN.description,
-                                fg=Color.BLACK.description)
+                                fg=Color.BLACK.description, command=showAnswer)
     question_button.grid(row=1, column=0, sticky=tk.W)
