@@ -1,5 +1,4 @@
 from src.models.Color import Color
-from src.models.Question import Question
 from tkinter import messagebox
 
 def create_question_view(tk, question_frame, question_obj):
@@ -15,7 +14,7 @@ def create_question_view(tk, question_frame, question_obj):
 
     question_label = tk.Label(question_frame, text=question_obj.question,
                               font=helvetica_20, bg=Color.LIGHT_GREEN.description, fg=Color.BLACK.description,
-                              wraplength=350, justify='left')
+                              wraplength=200, justify='left')
     question_label.grid(row=0, column=0, sticky=tk.E)
         
     question_button = tk.Button(question_frame, text='Show Answer', font=helvetica_20, bg=Color.LIGHT_GREEN.description,
