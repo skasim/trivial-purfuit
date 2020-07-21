@@ -4,7 +4,9 @@ from src.game_board_view import create_game_board
 from src.models.Color import Color
 from src.models.Player import Player
 from src.models.Turn import Turn
+from src.models.Question import Question
 from tkinter.font import Font
+
 
 from src.entry_view import create_entry_view
 from src.question_view import create_question_view
@@ -16,8 +18,8 @@ Stack Overflow, 1 Nov. 1966, stackoverflow.com/a/49681192/4882806.
 """
 
 ROWS, COLUMNS = 25, 25  # size of grid
-DISPLAY_ROWS = 15  # number of rows to display
-DISPLAY_COLUMNS = 20  # number of columns to display
+DISPLAY_ROWS = 10  # number of rows to display
+DISPLAY_COLUMNS = 25  # number of columns to display
 
 
 class TrivialPurfuit(tk.Tk):
@@ -114,7 +116,14 @@ class TrivialPurfuit(tk.Tk):
         question_label = create_question_view(
             tk=tk,
             question_frame=question_frame,
-        )
+            question_obj=Question('',''),
+        )[0]
+
+        question_button = create_question_view(
+            tk=tk,
+            question_frame=question_frame,
+            question_obj=Question('',''),
+        )[1]
 
         question_view_canvas.create_window((0, 0), window=question_frame, anchor=tk.NW)
         question_frame.update_idletasks()
@@ -171,7 +180,8 @@ class TrivialPurfuit(tk.Tk):
             sq_dim=7,
             names=names,
             players=players,
-            turn=turn
+            turn=turn,
+            question_button=question_button
         )
 
         canvas_board_game.create_window((0, 0), window=buttons_frame, anchor=tk.NW)
