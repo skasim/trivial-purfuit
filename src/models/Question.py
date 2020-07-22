@@ -17,7 +17,6 @@ class Question(object):
         self._category = category
         self._was_asked = was_asked
 
-
     @property
     def question(self):
         """

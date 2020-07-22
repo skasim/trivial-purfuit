@@ -1,9 +1,8 @@
 import re
-import random
+from decouple import config
 
 from src.models.Color import Color
-from src.models.Question import Question
-from src.question_view import showAnswer
+from src.question_view import show_answer
 
 """
 The button system for our board game was inspired by abhishek305. “abhishek305/Tic-Tac-Toe-Game-in-Python-3-Tkinter.” 
@@ -68,6 +67,9 @@ def create_game_board(tk_button, frame, question_label, font_type, start_row, sq
     """
     Method representing the board game view. Each row and button is individually created.
 
+    :param question_bank: Object representing bank of questions
+    :type QuestionBank
+    :param question_button: 
     :param tk_button: Tkinter Button object
     :type: Button
     :param frame: The Frame in which to create the game board
@@ -88,209 +90,295 @@ def create_game_board(tk_button, frame, question_label, font_type, start_row, sq
     :type: Turn object
     """
     # row 1
-    row1_sq1 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.RED.description, bg=Color.RED.description,
+    row1_sq1 = tk_button(frame, text=' ', font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY1_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY1_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row1_sq1, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row1_sq1, question_label,
+                                                            question_button, question_bank))
     row1_sq1.grid(row=start_row, column=1)
 
-    row1_sq2 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.WHITE.description, bg=Color.WHITE.description,
+    row1_sq2 = tk_button(frame, text=' ', font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY2_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY2_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row1_sq2, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row1_sq2, question_label,
+                                                            question_button, question_bank))
     row1_sq2.grid(row=start_row, column=2)
 
     row1_sq3 = tk_button(frame, text='Roll Again', font=font_type,
-                         highlightbackground=Color.ORANGE.description, bg=Color.ORANGE.description, height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row1_sq3, question_label, question_button, question_bank))
+                         highlightbackground=Color.ORANGE.description, bg=Color.ORANGE.description, height=sq_dim,
+                         width=sq_dim,
+                         command=lambda: board_square_click(players, names, turn, row1_sq3, question_label,
+                                                            question_button, question_bank))
     row1_sq3.grid(row=start_row, column=3)
 
-    row1_sq4 = tk_button(frame, text='RED', font=font_type, highlightbackground=Color.RED.description, bg=Color.RED.description,
+    row1_sq4 = tk_button(frame, text=config('CATEGORY1_COLOR').upper(), font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY1_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY1_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row1_sq4, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row1_sq4, question_label,
+                                                            question_button, question_bank))
     row1_sq4.grid(row=start_row, column=4)
 
     row1_sq5 = tk_button(frame, text='Roll Again', font=font_type,
-                         highlightbackground=Color.ORANGE.description, bg=Color.ORANGE.description, height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row1_sq5, question_label, question_button, question_bank))
+                         highlightbackground=Color.ORANGE.description, bg=Color.ORANGE.description, height=sq_dim,
+                         width=sq_dim,
+                         command=lambda: board_square_click(players, names, turn, row1_sq5, question_label,
+                                                            question_button, question_bank))
     row1_sq5.grid(row=start_row, column=5)
 
-    row1_sq6 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.WHITE.description, bg=Color.WHITE.description,
+    row1_sq6 = tk_button(frame, text=' ', font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY2_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY2_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row1_sq6, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row1_sq6, question_label,
+                                                            question_button, question_bank))
     row1_sq6.grid(row=start_row, column=6)
 
-    row1_sq7 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.BLUE.description, bg=Color.BLUE.description,
+    row1_sq7 = tk_button(frame, text=' ', font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY3_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY3_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row1_sq7, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row1_sq7, question_label,
+                                                            question_button, question_bank))
     row1_sq7.grid(row=start_row, column=7)
 
     # row 2
-    row2_sq1 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.BLUE.description, bg=Color.BLUE.description,
+    row2_sq1 = tk_button(frame, text=' ', font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY3_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY3_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row2_sq1, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row2_sq1, question_label,
+                                                            question_button, question_bank))
     row2_sq1.grid(row=start_row + 1, column=1)
 
-    row2_sq4 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.WHITE.description, bg=Color.WHITE.description,
+    row2_sq4 = tk_button(frame, text=' ', font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY2_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY2_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row2_sq4, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row2_sq4, question_label,
+                                                            question_button, question_bank))
     row2_sq4.grid(row=start_row + 1, column=4)
 
-    row2_sq7 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.GREEN.description, bg=Color.GREEN.description,
+    row2_sq7 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.GREEN.description,
+                         bg=Color.GREEN.description,
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row2_sq7, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row2_sq7, question_label,
+                                                            question_button, question_bank))
     row2_sq7.grid(row=start_row + 1, column=7)
 
     # row 3
     row3_sq1 = tk_button(frame, text='Roll Again', font=font_type,
-                         highlightbackground=Color.ORANGE.description, bg=Color.ORANGE.description, height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row3_sq1, question_label, question_button, question_bank))
+                         highlightbackground=Color.ORANGE.description, bg=Color.ORANGE.description, height=sq_dim,
+                         width=sq_dim,
+                         command=lambda: board_square_click(players, names, turn, row3_sq1, question_label,
+                                                            question_button, question_bank))
     row3_sq1.grid(row=start_row + 2, column=1)
 
-    row3_sq4 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.BLUE.description, bg=Color.BLUE.description,
+    row3_sq4 = tk_button(frame, text=' ', font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY3_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY3_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row3_sq4, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row3_sq4, question_label,
+                                                            question_button, question_bank))
     row3_sq4.grid(row=start_row + 2, column=4)
 
     row3_sq7 = tk_button(frame, text='Roll Again', font=font_type,
-                         highlightbackground=Color.ORANGE.description, bg=Color.ORANGE.description, height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row3_sq7, question_label, question_button, question_bank))
+                         highlightbackground=Color.ORANGE.description, bg=Color.ORANGE.description, height=sq_dim,
+                         width=sq_dim,
+                         command=lambda: board_square_click(players, names, turn, row3_sq7, question_label,
+                                                            question_button, question_bank))
     row3_sq7.grid(row=start_row + 2, column=7)
 
     # row 4 - with center square
-    row4_sq1 = tk_button(frame, text='GREEN', font=font_type, highlightbackground=Color.GREEN.description, bg=Color.GREEN.description,
+    row4_sq1 = tk_button(frame, text=config('CATEGORY4_COLOR').upper(), font=font_type,
+                         highlightbackground=Color.GREEN.description,
+                         bg=Color.GREEN.description,
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row4_sq1, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row4_sq1, question_label,
+                                                            question_button, question_bank))
     row4_sq1.grid(row=start_row + 3, column=1)
 
-    row4_sq2 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.RED.description, bg=Color.RED.description,
+    row4_sq2 = tk_button(frame, text=' ', font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY1_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY1_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row4_sq2, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row4_sq2, question_label,
+                                                            question_button, question_bank))
     row4_sq2.grid(row=start_row + 3, column=2)
 
-    row4_sq3 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.WHITE.description, bg=Color.WHITE.description,
+    row4_sq3 = tk_button(frame, text=' ', font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY2_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY2_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row4_sq3, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row4_sq3, question_label,
+                                                            question_button, question_bank))
     row4_sq3.grid(row=start_row + 3, column=3)
 
     row4_sq4 = tk_button(frame, text='CENTER', font=font_type,
-                         highlightbackground=Color.PURPLE.description, bg=Color.PURPLE.description, height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row4_sq4, question_label, question_button, question_bank))
+                         highlightbackground=Color.PURPLE.description, bg=Color.PURPLE.description, height=sq_dim,
+                         width=sq_dim,
+                         command=lambda: board_square_click(players, names, turn, row4_sq4, question_label,
+                                                            question_button, question_bank))
     row4_sq4.grid(row=start_row + 3, column=4)
 
-    row4_sq5 = tk_button(frame, text='  ', font=font_type, highlightbackground=Color.GREEN.description, bg=Color.GREEN.description,
+    row4_sq5 = tk_button(frame, text='  ', font=font_type, highlightbackground=Color.GREEN.description,
+                         bg=Color.GREEN.description,
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row4_sq5, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row4_sq5, question_label,
+                                                            question_button, question_bank))
     row4_sq5.grid(row=start_row + 3, column=5)
 
-    row4_sq6 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.BLUE.description, bg=Color.BLUE.description,
+    row4_sq6 = tk_button(frame, text=' ', font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY3_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY3_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row4_sq6, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row4_sq6, question_label,
+                                                            question_button, question_bank))
     row4_sq6.grid(row=start_row + 3, column=6)
 
-    row4_sq7 = tk_button(frame, text='WHITE', font=font_type, highlightbackground=Color.WHITE.description, bg=Color.WHITE.description,
+    row4_sq7 = tk_button(frame, text=config('CATEGORY2_COLOR').upper(), font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY2_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY2_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row4_sq7, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row4_sq7, question_label,
+                                                            question_button, question_bank))
     row4_sq7.grid(row=start_row + 3, column=7)
 
     # row 5
     row5_sq1 = tk_button(frame, text='Roll Again', font=font_type,
-                         highlightbackground=Color.ORANGE.description, bg=Color.ORANGE.description, height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row5_sq1, question_label, question_button, question_bank))
+                         highlightbackground=Color.ORANGE.description, bg=Color.ORANGE.description, height=sq_dim,
+                         width=sq_dim,
+                         command=lambda: board_square_click(players, names, turn, row5_sq1, question_label,
+                                                            question_button, question_bank))
     row5_sq1.grid(row=start_row + 4, column=1)
 
-    row5_sq4 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.RED.description, bg=Color.RED.description,
+    row5_sq4 = tk_button(frame, text=' ', font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY1_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY1_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row5_sq4, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row5_sq4, question_label,
+                                                            question_button, question_bank))
     row5_sq4.grid(row=start_row + 4, column=4)
 
     row5_sq7 = tk_button(frame, text='Roll Again', font=font_type,
-                         highlightbackground=Color.ORANGE.description, bg=Color.ORANGE.description, height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row5_sq7, question_label, question_button, question_bank))
+                         highlightbackground=Color.ORANGE.description, bg=Color.ORANGE.description, height=sq_dim,
+                         width=sq_dim,
+                         command=lambda: board_square_click(players, names, turn, row5_sq7, question_label,
+                                                            question_button, question_bank))
     row5_sq7.grid(row=start_row + 4, column=7)
 
     # row 6
-    row6_sq1 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.WHITE.description, bg=Color.WHITE.description,
+    row6_sq1 = tk_button(frame, text=' ', font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY2_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY2_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row6_sq1, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row6_sq1, question_label,
+                                                            question_button, question_bank))
     row6_sq1.grid(row=start_row + 5, column=1)
 
-    row6_sq4 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.GREEN.description, bg=Color.GREEN.description,
+    row6_sq4 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.GREEN.description,
+                         bg=Color.GREEN.description,
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row6_sq4, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row6_sq4, question_label,
+                                                            question_button, question_bank))
     row6_sq4.grid(row=start_row + 5, column=4)
 
-    row6_sq7 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.GREEN.description, bg=Color.GREEN.description,
+    row6_sq7 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.GREEN.description,
+                         bg=Color.GREEN.description,
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row6_sq7, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row6_sq7, question_label,
+                                                            question_button, question_bank))
     row6_sq7.grid(row=start_row + 5, column=7)
 
     # row 7
-    row7_sq1 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.RED.description, bg=Color.RED.description,
+    row7_sq1 = tk_button(frame, text=' ', font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY1_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY1_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row7_sq1, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row7_sq1, question_label,
+                                                            question_button, question_bank))
     row7_sq1.grid(row=start_row + 6, column=1)
 
-    row7_sq2 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.GREEN.description, bg=Color.GREEN.description,
+    row7_sq2 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.GREEN.description,
+                         bg=Color.GREEN.description,
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row7_sq2, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row7_sq2, question_label,
+                                                            question_button, question_bank))
     row7_sq2.grid(row=start_row + 6, column=2)
 
     row7_sq3 = tk_button(frame, text='Roll Again', font=font_type,
-                         highlightbackground=Color.ORANGE.description, bg=Color.ORANGE.description, height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row7_sq3, question_label, question_button, question_bank))
+                         highlightbackground=Color.ORANGE.description, bg=Color.ORANGE.description, height=sq_dim,
+                         width=sq_dim,
+                         command=lambda: board_square_click(players, names, turn, row7_sq3, question_label,
+                                                            question_button, question_bank))
     row7_sq3.grid(row=start_row + 6, column=3)
 
-    row7_sq4 = tk_button(frame, text='BLUE', font=font_type, highlightbackground=Color.BLUE.description, bg=Color.BLUE.description,
+    row7_sq4 = tk_button(frame, text=config('CATEGORY3_COLOR').upper(), font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY3_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY3_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row7_sq4, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row7_sq4, question_label,
+                                                            question_button, question_bank))
     row7_sq4.grid(row=start_row + 6, column=4)
 
     row7_sq5 = tk_button(frame, text='Roll Again', font=font_type,
-                         highlightbackground=Color.ORANGE.description, bg=Color.ORANGE.description, height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row7_sq5, question_label, question_button, question_bank))
+                         highlightbackground=Color.ORANGE.description, bg=Color.ORANGE.description, height=sq_dim,
+                         width=sq_dim,
+                         command=lambda: board_square_click(players, names, turn, row7_sq5, question_label,
+                                                            question_button, question_bank))
     row7_sq5.grid(row=start_row + 6, column=5)
 
-    row7_sq6 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.BLUE.description, bg=Color.BLUE.description,
+    row7_sq6 = tk_button(frame, text=' ', font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY3_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY3_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row7_sq6, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row7_sq6, question_label,
+                                                            question_button, question_bank))
     row7_sq6.grid(row=start_row + 6, column=6)
 
-    row7_sq7 = tk_button(frame, text=' ', font=font_type, highlightbackground=Color.RED.description, bg=Color.RED.description,
+    row7_sq7 = tk_button(frame, text=' ', font=font_type,
+                         highlightbackground=Color.return_hex_from_color(config('CATEGORY1_COLOR')),
+                         bg=Color.return_hex_from_color(config('CATEGORY1_COLOR')),
                          height=sq_dim, width=sq_dim,
-                         command=lambda: board_square_click(players, names, turn, row7_sq7, question_label, question_button, question_bank))
+                         command=lambda: board_square_click(players, names, turn, row7_sq7, question_label,
+                                                            question_button, question_bank))
     row7_sq7.grid(row=start_row + 6, column=7)
 
 
 def display_question(color_type, tk_label, tk_button, question_bank):
     """
 
+    :param tk_button: 
     :param color_type: Color representing question category
     :param tk_label: Tkinter Label object
     :param question_bank: QuestionBank object
     """
 
-    red_questions = question_bank.people_questions
+    category1_questions = question_bank.category1_questions
 
-    white_questions = question_bank.event_questions
+    category2_questions = question_bank.category2_questions
 
-    blue_questions = question_bank.places_questions
+    category3_questions = question_bank.category3_questions
 
-    green_questions = question_bank.independence_day_questions
+    category4_questions = question_bank.category4_questions
 
-    if color_type == Color.RED.color:
-        question = question_bank.pick_random_question(red_questions)
+    if color_type == config('CATEGORY1_COLOR'):
+        question = question_bank.pick_random_question(category1_questions)
         tk_label.configure(text=question.question)
-        tk_button.configure(command=lambda: showAnswer(question))
-    elif color_type == Color.WHITE.color:
-        question = question_bank.pick_random_question(white_questions)
+        tk_button.configure(command=lambda: show_answer(question))
+    elif color_type == config('CATEGORY2_COLOR'):
+        question = question_bank.pick_random_question(category2_questions)
         tk_label.configure(text=question.question)
-        tk_button.configure(command=lambda: showAnswer(question))
-    elif color_type == Color.BLUE.color:
-        question = question_bank.pick_random_question(blue_questions)
+        tk_button.configure(command=lambda: show_answer(question))
+    elif color_type == config('CATEGORY3_COLOR'):
+        question = question_bank.pick_random_question(category3_questions)
         tk_label.configure(text=question.question)
-        tk_button.configure(command=lambda: showAnswer(question))
-    elif color_type == Color.GREEN.color:
-        question = question_bank.pick_random_question(green_questions)
+        tk_button.configure(command=lambda: show_answer(question))
+    elif color_type == config('CATEGORY4_COLOR'):
+        question = question_bank.pick_random_question(category4_questions)
         tk_label.configure(text=question.question)
-        tk_button.configure(command=lambda: showAnswer(question))
+        tk_button.configure(command=lambda: show_answer(question))
     else:
         tk_label.configure(text=' ')

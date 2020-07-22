@@ -2,51 +2,63 @@ import random
 
 
 class QuestionBank(object):
+    """
+    Object representing the bank of questions
+
+    :param category1_questions: The first category of questions set in .env file
+    :type category1_questions: str
+    :param category2_questions: The second category of questions set in .env file
+    :type category2_questions: str
+    :param category3_questions: The third category of questions set in .env file
+    :type category3_questions: str
+    :param category4_questions: The fourth category of questions set in .env file
+    :type category4_questions: str
+    """
 
     def __init__(self,
-                 people_questions=[],
-                 event_questions=[],
-                 places_questions=[],
-                 independence_day_questions=[]):
-        self._people_questions = people_questions
-        self._event_questions = event_questions
-        self._places_questions = places_questions
-        self._independence_day_questions = independence_day_questions
+                 category1_questions=[],
+                 category2_questions=[],
+                 category3_questions=[],
+                 category4_questions=[]):
+        self._category1_questions = category1_questions
+        self._category2_questions = category2_questions
+        self._category3_questions = category3_questions
+        self._category4_questions = category4_questions
 
     @property
-    def people_questions(self):
-        return self._people_questions
+    def category1_questions(self):
+        return self._category1_questions
 
     @property
-    def event_questions(self):
-        return self._event_questions
+    def category2_questions(self):
+        return self._category2_questions
 
     @property
-    def places_questions(self):
-        return self._places_questions
+    def category3_questions(self):
+        return self._category3_questions
 
     @property
-    def independence_day_questions(self):
-        return self._independence_day_questions
+    def category4_questions(self):
+        return self._category4_questions
 
-    @people_questions.setter
-    def people_questions(self, people_questions):
-        self._people_questions = people_questions
+    @category1_questions.setter
+    def category1_questions(self, category1_questions):
+        self._category1_questions = category1_questions
 
-    @event_questions.setter
-    def event_questions(self, event_questions):
-        self._event_questions = event_questions
+    @category2_questions.setter
+    def category2_questions(self, category2_questions):
+        self._category2_questions = category2_questions
 
-    @places_questions.setter
-    def places_questions(self, places_questions):
-        self._places_questions = places_questions
+    @category3_questions.setter
+    def category3_questions(self, category3_questions):
+        self._category3_questions = category3_questions
 
-    @independence_day_questions.setter
-    def independence_day_questions(self, independence_day_questions):
-        self._independence_day_questions = independence_day_questions
+    @category4_questions.setter
+    def category4_questions(self, category4_questions):
+        self._category4_questions = category4_questions
 
     def pick_random_question(self, questions_list):
-        select = random.randint(0, len(questions_list)-1)
+        select = random.randint(0, len(questions_list) - 1)
         print(select)
         question = questions_list[select]
 

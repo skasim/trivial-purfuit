@@ -1,8 +1,8 @@
 from csv import DictReader
 import os
-#TODO https://thispointer.com/python-read-a-csv-file-line-by-line-with-or-without-header/#:~:text=Read%20csv%20file%20line%20by,cell%20values%20for%20that%20row.&text=It%20iterates%20over%20all%20the%20rows%20of%20students,-.
 from src.models.Question import Question
 from src.models.QuestionBank import QuestionBank
+from decouple import config
 
 
 def load_file(filename):
@@ -23,16 +23,12 @@ def load_file(filename):
 def load_question_files(question_files):
     question_bank = QuestionBank()
     for file in question_files:
-        if file == 'question_files/people.csv':
-            question_bank.people_questions = load_file(file)
-        elif file == 'question_files/events.csv':
-            question_bank.event_questions = load_file(file)
-        elif file == 'question_files/places.csv':
-            question_bank.places_questions = load_file(file)
+        if file == config('CATEGORY1_FILE'):
+            question_bank.category1_questions = load_file(file)
+        elif file == config('CATEGORY2_FILE'):
+            question_bank.category2_questions = load_file(file)
+        elif file == config('CATEGORY3_FILE'):
+            question_bank._category3_questions = load_file(file)
         else:
-            question_bank.independence_day_questions = load_file(file)
+            question_bank.category4_questions = load_file(file)
     return question_bank
-
-
-
-

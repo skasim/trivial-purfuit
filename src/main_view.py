@@ -7,7 +7,7 @@ from src.models.Player import Player
 from src.models.Turn import Turn
 from src.models.Question import Question
 from tkinter.font import Font
-
+from decouple import config
 
 from src.entry_view import create_entry_view
 from src.question_view import create_question_view
@@ -82,8 +82,8 @@ class TrivialPurfuit(tk.Tk):
         player4_name.grid(row=4, column=1, columnspan=8, sticky='w')
 
         # instantiate question bank, players, turn and player objects
-        question_files = ['question_files/people.csv', 'question_files/events.csv',
-                          'question_files/places.csv', 'question_files/independence_day.csv']
+        question_files = [config('CATEGORY1_FILE'), config('CATEGORY2_FILE'),
+                          config('CATEGORY3_FILE'), config('CATEGORY4_FILE')]
         question_bank = load_question_files(question_files)
 
         turn = Turn()
@@ -205,4 +205,3 @@ class TrivialPurfuit(tk.Tk):
 if __name__ == "__main__":
     app = TrivialPurfuit("Trivial Purfuit by Software Titans")
     app.mainloop()
-

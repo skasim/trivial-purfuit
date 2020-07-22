@@ -50,3 +50,18 @@ class Color(namedtuple('color', 'color description'), Enum):
             return Color.LIGHT_GREEN.color
         elif self == Color.LIGHT_PURPLE.description:
             return Color.LIGHT_PURPLE.color
+
+    def return_hex_from_color(self):
+        """
+        Method takes a color string and returns its hex value
+
+        :return: str
+        """
+        if self == 'red':
+            return Color.RED.description
+        elif self == 'white':
+            return Color.WHITE.description
+        elif self == 'blue':
+            return Color.BLUE.description
+        elif self == 'green':
+            return Color.GREEN.description
