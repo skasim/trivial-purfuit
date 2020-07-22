@@ -65,3 +65,13 @@ class Color(namedtuple('color', 'color description'), Enum):
             return Color.BLUE.description
         elif self == 'green':
             return Color.GREEN.description
+        elif self == 'light green':
+            return Color.LIGHT_GREEN.description
+        elif self == 'light blue':
+            return Color.LIGHT_BLUE.description
+        elif self == 'yellow':
+            return Color.YELLOW.description
+        elif self == 'light purple':
+            return Color.LIGHT_PURPLE.description
+        elif self == 'orange':
+            return Color.ORANGE.description

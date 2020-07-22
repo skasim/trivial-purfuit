@@ -90,8 +90,8 @@ class TrivialPurfuit(tk.Tk):
 
         p1 = Player('player1')
         print(p1.slices.get_slices_won())
-        p1.slices.red = True
-        p1.slices.white = True
+        p1.slices.category1 = True
+        p1.slices.category2 = True
         print(p1.slices.get_slices_won())
         p2 = Player('player2')
         p3 = Player('player3')
