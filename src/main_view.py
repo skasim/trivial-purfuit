@@ -1,12 +1,13 @@
 import tkinter as tk
 from src.die_roll_view import create_die_roll
+from src.file_io import load_question_files
 from src.game_board_view import create_game_board
 from src.models.Color import Color
 from src.models.Player import Player
 from src.models.Turn import Turn
 from src.models.Question import Question
 from tkinter.font import Font
-
+from decouple import config
 
 from src.entry_view import create_entry_view
 from src.question_view import create_question_view
@@ -80,12 +81,17 @@ class TrivialPurfuit(tk.Tk):
         player4_name = tk.Entry(entry_frame, textvariable=player4, bd=5)
         player4_name.grid(row=4, column=1, columnspan=8, sticky='w')
 
-        # instantiate players, turn and player objects
+        # instantiate question bank, players, turn and player objects
+        question_files = [config('CATEGORY1_FILE'), config('CATEGORY2_FILE'),
+                          config('CATEGORY3_FILE'), config('CATEGORY4_FILE')]
+        question_bank = load_question_files(question_files)
+
         turn = Turn()
+
         p1 = Player('player1')
         print(p1.slices.get_slices_won())
-        p1.slices.red = True
-        p1.slices.white = True
+        p1.slices.category1 = True
+        p1.slices.category2 = True
         print(p1.slices.get_slices_won())
         p2 = Player('player2')
         p3 = Player('player3')
@@ -116,13 +122,13 @@ class TrivialPurfuit(tk.Tk):
         question_label = create_question_view(
             tk=tk,
             question_frame=question_frame,
-            question_obj=Question('',''),
+            question_obj=Question(),
         )[0]
 
         question_button = create_question_view(
             tk=tk,
             question_frame=question_frame,
-            question_obj=Question('',''),
+            question_obj=Question(),
         )[1]
 
         question_view_canvas.create_window((0, 0), window=question_frame, anchor=tk.NW)
@@ -181,7 +187,8 @@ class TrivialPurfuit(tk.Tk):
             names=names,
             players=players,
             turn=turn,
-            question_button=question_button
+            question_button=question_button,
+            question_bank=question_bank
         )
 
         canvas_board_game.create_window((0, 0), window=buttons_frame, anchor=tk.NW)
@@ -198,4 +205,3 @@ class TrivialPurfuit(tk.Tk):
 if __name__ == "__main__":
     app = TrivialPurfuit("Trivial Purfuit by Software Titans")
     app.mainloop()
-

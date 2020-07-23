@@ -1,3 +1,5 @@
+from decouple import config
+
 class Slices(object):
     """
     Object representing the cake slices earned by a player. Each of the colors is represented
@@ -6,81 +8,81 @@ class Slices(object):
     """
 
     def __init__(self):
-        self._red = False
-        self._green = False
-        self._blue = False
-        self._white = False
+        self._category1 = False
+        self._category4 = False
+        self._category3 = False
+        self._category2 = False
 
     @property
-    def red(self):
+    def category1(self):
         """
-        Getter method representing red slice
+        Getter method representing category1 slice
 
         :return: boolean
         """
-        return self._red
+        return self._category1
 
     @property
-    def green(self):
+    def category4(self):
         """
-        Getter method representing green slice
+        Getter method representing category4 slice
 
         :return: boolean
         """
-        return self._green
+        return self._category4
 
     @property
-    def blue(self):
+    def category3(self):
         """
-        Getter method representing blue slice
+        Getter method representing category3 slice
 
         :return: boolean
         """
-        return self._blue
+        return self._category3
 
     @property
-    def white(self):
+    def category2(self):
         """
-        Getter method representing white slice
+        Getter method representing category2 slice
 
         :return: boolean
         """
-        return self._white
+        return self._category2
 
-    @red.setter
-    def red(self, red):
+    @category1.setter
+    def category1(self, category1):
         """
         Setter method to set whether slice is earned
 
-        :param red: boolean value for whether slice has been earned
+        :param category1: boolean value for whether slice has been earned
         """
-        self._red = red
+        self._category1 = category1
 
-    @green.setter
-    def green(self, green):
+    @category4.setter
+    def category4(self, category4):
         """
 
-        :param green: boolean value for whether slice has been earned
+        :param category4: boolean value for whether slice has been earned
         """
-        self._green = green
+        self._category4 = category4
 
-    @blue.setter
-    def blue(self, blue):
+    @category3.setter
+    def category3(self, category3):
         """
         Setter method to set whether slice is earned
 
-        :param blue: boolean value for whether slice has been earned
+        :param category3: boolean value for whether slice has been earned
         """
-        self._blue = blue
+        self._category3 = category3
 
-    @white.setter
-    def white(self, white):
+    @category2.setter
+    def category2(self, category2):
         """
         Setter method to set whether slice is earned
 
-        :param white: boolean value for whether slice has been earned
+        :param category2: boolean value for whether slice has been earned
         """
-        self._white = white
+        self._category2 = category2
 
     def get_slices_won(self):
         """
@@ -93,14 +95,17 @@ class Slices(object):
 
         slices_won = '['
 
-        if self._red:
-            slices_won += 'R '
-        if self._green:
-            slices_won += 'G '
-        if self._blue:
-            slices_won += 'B '
-        if self._white:
-            slices_won += 'W'
+        if self._category1:
+            first_char = config('CATEGORY1_COLOR').upper()[0]
+            slices_won += first_char + ' '
+        if self._category4:
+            first_char = config('CATEGORY2_COLOR').upper()[0]
+            slices_won += first_char + ' '
+        if self._category3:
+            first_char = config('CATEGORY3_COLOR').upper()[0]
+            slices_won += first_char + ' '
+        first_char = config('CATEGORY4_COLOR').upper()[0]
+        slices_won += first_char + ' '
         slices_won += "]"
 
         return slices_won
