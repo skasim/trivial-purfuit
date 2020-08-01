@@ -123,12 +123,18 @@ class TrivialPurfuit(tk.Tk):
             tk=tk,
             question_frame=question_frame,
             question_obj=Question(),
+            players=players,
+            turn=turn,
+            button_text=''
         )[0]
 
         question_button = create_question_view(
             tk=tk,
             question_frame=question_frame,
             question_obj=Question(),
+            players=players,
+            turn=turn,
+            button_text=''
         )[1]
 
         question_view_canvas.create_window((0, 0), window=question_frame, anchor=tk.NW)

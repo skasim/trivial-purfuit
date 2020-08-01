@@ -1,5 +1,3 @@
-from decouple import config
-
 class Slices(object):
     """
     Object representing the cake slices earned by a player. Each of the colors is represented
@@ -96,16 +94,13 @@ class Slices(object):
         slices_won = '['
 
         if self._category1:
-            first_char = config('CATEGORY1_COLOR').upper()[0]
-            slices_won += first_char + ' '
+            slices_won += 'R '
         if self._category4:
-            first_char = config('CATEGORY2_COLOR').upper()[0]
-            slices_won += first_char + ' '
+            slices_won += 'G '
         if self._category3:
-            first_char = config('CATEGORY3_COLOR').upper()[0]
-            slices_won += first_char + ' '
-        first_char = config('CATEGORY4_COLOR').upper()[0]
-        slices_won += first_char + ' '
+            slices_won += 'B '
+        if self._category2:
+            slices_won += 'W'
         slices_won += "]"
 
         return slices_won

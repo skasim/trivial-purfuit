@@ -1,8 +1,9 @@
 from src.models.Color import Color
 from tkinter import messagebox
+from decouple import config
 
 
-def create_question_view(tk, question_frame, question_obj):
+def create_question_view(tk, question_frame, question_obj, players, turn, button_text):
     """
     Method to create the question view
 
@@ -19,16 +20,29 @@ def create_question_view(tk, question_frame, question_obj):
     question_label.grid(row=0, column=0, sticky=tk.E)
 
     question_button = tk.Button(question_frame, text='Show Answer', font=helvetica_20, bg=Color.LIGHT_GREEN.description,
-                                fg=Color.BLACK.description, command=show_answer(question_obj))
+                                fg=Color.BLACK.description, command=show_answer(question_obj, players, turn, button_text))
     question_button.grid(row=1, column=0, sticky=tk.W)
     # question_button.configure(command=show_answer())
 
     return question_label, question_button
 
 
-def show_answer(question_obj):
+def show_answer(question_obj, players, turn, button_text):
     if question_obj.answer != '':
-        messagebox.askyesno("Answer", question_obj.answer + "\nDid you get this correct?")
+        verify = messagebox.askyesno("Answer", question_obj.answer + "\nDid you get this correct?")
         #TODO
-        # check if messagebox.askyesno is true. if yes, then check if square is a head square. if true, then add slice to player
+        # check if verify is true. if yes, then check if square is a head square. if true, then add slice to player
         # if answer is false, then move to next player by calling Turn.increment_player_turn()
+        if verify:
+            print("BUTTON TEXT")
+            print(button_text)
+            if button_text != ' ':
+                if button_text == config('CATEGORY1_COLOR').upper():
+                    players[turn.player_turn].slices.category1 = True
+                elif button_text == config('CATEGORY2_COLOR').upper():
+                    players[turn.player_turn].slices.category2 = True
+                elif button_text == config('CATEGORY3_COLOR').upper():
+                    players[turn.player_turn].slices.category3 = True
+                elif button_text == config('CATEGORY4_COLOR').upper():
+                    players[turn.player_turn].slices.category4 = True
+
