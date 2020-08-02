@@ -363,22 +363,24 @@ def display_question(color_type, tk_label, tk_button, question_bank):
     category3_questions = question_bank.category3_questions
 
     category4_questions = question_bank.category4_questions
-
-    if color_type == config('CATEGORY1_COLOR'):
-        question = question_bank.pick_random_question(category1_questions)
-        tk_label.configure(text=question.question)
-        tk_button.configure(command=lambda: show_answer(question))
-    elif color_type == config('CATEGORY2_COLOR'):
-        question = question_bank.pick_random_question(category2_questions)
-        tk_label.configure(text=question.question)
-        tk_button.configure(command=lambda: show_answer(question))
-    elif color_type == config('CATEGORY3_COLOR'):
-        question = question_bank.pick_random_question(category3_questions)
-        tk_label.configure(text=question.question)
-        tk_button.configure(command=lambda: show_answer(question))
-    elif color_type == config('CATEGORY4_COLOR'):
-        question = question_bank.pick_random_question(category4_questions)
-        tk_label.configure(text=question.question)
-        tk_button.configure(command=lambda: show_answer(question))
-    else:
-        tk_label.configure(text=' ')
+    try:
+        if color_type == config('CATEGORY1_COLOR'):
+            question = question_bank.pick_random_question(category1_questions)
+            tk_label.configure(text=question.question)
+            tk_button.configure(command=lambda: show_answer(question))
+        elif color_type == config('CATEGORY2_COLOR'):
+            question = question_bank.pick_random_question(category2_questions)
+            tk_label.configure(text=question.question)
+            tk_button.configure(command=lambda: show_answer(question))
+        elif color_type == config('CATEGORY3_COLOR'):
+            question = question_bank.pick_random_question(category3_questions)
+            tk_label.configure(text=question.question)
+            tk_button.configure(command=lambda: show_answer(question))
+        elif color_type == config('CATEGORY4_COLOR'):
+            question = question_bank.pick_random_question(category4_questions)
+            tk_label.configure(text=question.question)
+            tk_button.configure(command=lambda: show_answer(question))
+        else:
+            tk_label.configure(text=' ')
+    except AttributeError:
+        print("who knows")
