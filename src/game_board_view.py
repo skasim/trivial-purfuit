@@ -49,17 +49,17 @@ def board_square_click(players, names, turn, button, tk_label, tk_button, questi
         button['text'] = players[turn.player_turn].name
         button['text'] = '{}\n{}'.format(players[turn.player_turn].name,
                                          players[turn.player_turn].slices.get_slices_won())
-        display_question(Color.return_color_from_hex(button['highlightbackground']), tk_label, tk_button, question_bank)
+        display_question(Color.return_color_from_hex(button['highlightbackground']), tk_label, tk_button, question_bank, players, turn, button['text'])
 
     elif button['text'] in board_labels:
         button['text'] = '{}{}\n{}'.format('*', button['text'], players[turn.player_turn].name)
-        display_question(Color.return_color_from_hex(button['highlightbackground']), tk_label, tk_button, question_bank)
+        display_question(Color.return_color_from_hex(button['highlightbackground']), tk_label, tk_button, question_bank, players, turn, button['text'])
     elif button['text'] != ' ' and (button['text'].startswith('*')):
         button['text'] = re.sub(r'^{0}'.format(re.escape('*')), '', button['text']).split('\n')[0]
-        display_question(Color, tk_label, tk_button, question_bank)
+        display_question(Color.return_color_from_hex(button['highlightbackground']), tk_label, tk_button, question_bank, players, turn, button['text'])
     elif button['text'] != ' ' and not (button['text'].startswith('*') and button['text'] in board_labels):
         button['text'] = ' '
-        display_question(Color, tk_label, tk_button, question_bank)
+        display_question(Color.return_color_from_hex(button['highlightbackground']), tk_label, tk_button, question_bank, players, turn, button['text'])
 
 
 def create_game_board(tk_button, frame, question_label, font_type, start_row, sq_dim, players, names, turn,
@@ -347,7 +347,7 @@ def create_game_board(tk_button, frame, question_label, font_type, start_row, sq
     row7_sq7.grid(row=start_row + 6, column=7)
 
 
-def display_question(color_type, tk_label, tk_button, question_bank):
+def display_question(color_type, tk_label, tk_button, question_bank, players, turn, button_text):
     """
 
     :param tk_button: 
@@ -367,18 +367,18 @@ def display_question(color_type, tk_label, tk_button, question_bank):
     if color_type == config('CATEGORY1_COLOR'):
         question = question_bank.pick_random_question(category1_questions)
         tk_label.configure(text=question.question)
-        tk_button.configure(command=lambda: show_answer(question))
+        tk_button.configure(command=lambda: show_answer(question, players, turn, color_type))
     elif color_type == config('CATEGORY2_COLOR'):
         question = question_bank.pick_random_question(category2_questions)
         tk_label.configure(text=question.question)
-        tk_button.configure(command=lambda: show_answer(question))
+        tk_button.configure(command=lambda: show_answer(question, players, turn, color_type))
     elif color_type == config('CATEGORY3_COLOR'):
         question = question_bank.pick_random_question(category3_questions)
         tk_label.configure(text=question.question)
-        tk_button.configure(command=lambda: show_answer(question))
+        tk_button.configure(command=lambda: show_answer(question, players, turn, color_type))
     elif color_type == config('CATEGORY4_COLOR'):
         question = question_bank.pick_random_question(category4_questions)
         tk_label.configure(text=question.question)
-        tk_button.configure(command=lambda: show_answer(question))
+        tk_button.configure(command=lambda: show_answer(question, players, turn, color_type))
     else:
         tk_label.configure(text=' ')
