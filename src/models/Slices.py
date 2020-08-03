@@ -98,14 +98,15 @@ class Slices(object):
         if self._category1:
             first_char = config('CATEGORY1_COLOR').upper()[0]
             slices_won += first_char + ' '
-        if self._category4:
+        if self._category2:
             first_char = config('CATEGORY2_COLOR').upper()[0]
             slices_won += first_char + ' '
         if self._category3:
             first_char = config('CATEGORY3_COLOR').upper()[0]
             slices_won += first_char + ' '
-        first_char = config('CATEGORY4_COLOR').upper()[0]
-        slices_won += first_char + ' '
+        if self._category4:
+            first_char = config('CATEGORY4_COLOR').upper()[0]
+            slices_won += first_char + ' '
         slices_won += "]"
 
         return slices_won

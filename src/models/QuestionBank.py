@@ -58,7 +58,6 @@ class QuestionBank(object):
         self._category4_questions = category4_questions
 
     def pick_random_question(self, questions_list):
-        print(len(questions_list))
         try:
             select = random.randint(0, len(questions_list) - 1)
             question = questions_list[select]
