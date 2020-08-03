@@ -89,10 +89,6 @@ class TrivialPurfuit(tk.Tk):
         turn = Turn()
 
         p1 = Player('player1')
-        print(p1.slices.get_slices_won())
-        #p1.slices.category1 = True
-        #p1.slices.category2 = True
-        print(p1.slices.get_slices_won())
         p2 = Player('player2')
         p3 = Player('player3')
         p4 = Player('player4')
@@ -123,12 +119,18 @@ class TrivialPurfuit(tk.Tk):
             tk=tk,
             question_frame=question_frame,
             question_obj=Question(),
+            players=players,
+            turn=turn,
+            button_text=''
         )[0]
 
         question_button = create_question_view(
             tk=tk,
             question_frame=question_frame,
             question_obj=Question(),
+            players=players,
+            turn=turn,
+            button_text=''
         )[1]
 
         question_view_canvas.create_window((0, 0), window=question_frame, anchor=tk.NW)

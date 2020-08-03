@@ -37,15 +37,11 @@ def show_answer(question_obj, players, turn, color_type):
             if color_type != ' ':
                 if color_type == config('CATEGORY1_COLOR'):
                     players[turn.player_turn].slices.category1 = True
-                    turn.increment_player_turn(len(players))
                 elif color_type == config('CATEGORY2_COLOR'):
                     players[turn.player_turn].slices.category2 = True
-                    turn.increment_player_turn(len(players))
                 elif color_type == config('CATEGORY3_COLOR'):
                     players[turn.player_turn].slices.category3 = True
-                    turn.increment_player_turn(len(players))
                 elif color_type == config('CATEGORY4_COLOR'):
                     players[turn.player_turn].slices.category4 = True
-                    turn.increment_player_turn(len(players))
         else:
             turn.increment_player_turn(len(players))
