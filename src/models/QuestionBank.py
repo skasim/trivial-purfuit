@@ -58,12 +58,14 @@ class QuestionBank(object):
         self._category4_questions = category4_questions
 
     def pick_random_question(self, questions_list):
-        select = random.randint(0, len(questions_list) - 1)
-        print(select)
-        question = questions_list[select]
+        try:
+            select = random.randint(0, len(questions_list) - 1)
+            question = questions_list[select]
 
-        if not question.was_asked:
-            question.was_asked = True
-            return question
-        else:
-            self.pick_random_question(self)
+            if not question.was_asked:
+                question.was_asked = True
+                return question
+            else:
+                self.pick_random_question(self)
+        except TypeError:
+            print("uh oh, we have run out of questions")
