@@ -44,7 +44,7 @@ def board_square_click(players, names, turn, button, tk_label, tk_button, questi
     :return:
     """
     add_player_names_to_player_objects(players, names)
-    board_labels = {'Roll Again', 'CENTER', 'RED', 'WHITE', 'GREEN', 'BLUE'}
+    board_labels = {'Roll Again', 'CENTER', config('CATEGORY1_COLOR').upper() , config('CATEGORY2_COLOR').upper(), config('CATEGORY3_COLOR').upper(), config('CATEGORY4_COLOR').upper()}
     if button['text'] == ' ' and not (button['text'] in board_labels):
         button['text'] = players[turn.player_turn].name
         button['text'] = '{}\n{}'.format(players[turn.player_turn].name,
