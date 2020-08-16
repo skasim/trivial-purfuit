@@ -1,7 +1,7 @@
 from src.models.Color import Color
 from tkinter import messagebox
 from decouple import config
-
+from src.entry_view import update_turn
 
 def create_question_view(tk, question_frame, question_obj, players, turn, button_text):
     """
@@ -16,13 +16,13 @@ def create_question_view(tk, question_frame, question_obj, players, turn, button
 
     question_label = tk.Label(question_frame, text=question_obj.question,
                               font=helvetica_20, bg=Color.LIGHT_GREEN.description, fg=Color.BLACK.description,
-                              wraplength=200, justify='left')
+                              wraplength=400, justify='left')
     question_label.grid(row=0, column=0, sticky=tk.E)
 
     question_button = tk.Button(question_frame, text='Show Answer', font=helvetica_20, bg=Color.LIGHT_GREEN.description,
-                                fg=Color.BLACK.description, command=show_answer(question_obj, players, turn, button_text, button_text))
+                                fg=Color.BLACK.description, command=lambda: show_answer(question_obj, players, turn,
+                                button_text, button_text))
     question_button.grid(row=1, column=0, sticky=tk.W)
-    # question_button.configure(command=show_answer())
 
     return question_label, question_button
 
@@ -42,3 +42,4 @@ def show_answer(question_obj, players, turn, color_type, button_text):
                     players[turn.player_turn].slices.category4 = True
         else:
             turn.increment_player_turn(len(players))
+            update_turn(players, turn)
