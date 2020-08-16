@@ -1,7 +1,7 @@
 import tkinter as tk
-from src.die_roll_view import create_die_roll
+from src.die_roll_view import create_die_roll, enable_die_roll
 from src.file_io import load_question_files
-from src.game_board_view import create_game_board
+from src.game_board_view import create_game_board, enable_game_board
 from src.models.Color import Color
 from src.models.Player import Player
 from src.models.Turn import Turn
@@ -9,7 +9,7 @@ from src.models.Question import Question
 from tkinter.font import Font
 from decouple import config
 
-from src.entry_view import create_entry_view
+from src.entry_view import create_entry_view, update_turn
 from src.question_view import create_question_view
 
 """
@@ -21,7 +21,6 @@ Stack Overflow, 1 Nov. 1966, stackoverflow.com/a/49681192/4882806.
 ROWS, COLUMNS = 25, 25  # size of grid
 DISPLAY_ROWS = 10  # number of rows to display
 DISPLAY_COLUMNS = 25  # number of columns to display
-
 
 class TrivialPurfuit(tk.Tk):
     """
@@ -50,7 +49,8 @@ class TrivialPurfuit(tk.Tk):
         frame_entry.grid(row=3, column=0, sticky=tk.NW)
 
         # add canvas to this name entry frame
-        canvas_entry = tk.Canvas(frame_entry, bg=Color.LIGHT_GREEN.description, borderwidth=0, highlightthickness=0)
+        canvas_entry = tk.Canvas(frame_entry, bg=Color.LIGHT_GREEN.description, borderwidth=0, highlightthickness=0,
+                                 width=700)
         canvas_entry.grid(row=0, column=0)
 
         entry_frame = tk.Frame(canvas_entry, bg=Color.LIGHT_GREEN.description, bd=1)
@@ -61,7 +61,7 @@ class TrivialPurfuit(tk.Tk):
 
         # Add canvas to the question view frame
         question_view_canvas = tk.Canvas(question_view, bg=Color.LIGHT_GREEN.description, borderwidth=0,
-                                         highlightthickness=0)
+                                         highlightthickness=0, width=500)
         question_view_canvas.grid(row=0, column=0)
 
         question_frame = tk.Frame(question_view_canvas, bg=Color.LIGHT_GREEN.description, bd=1)
@@ -80,6 +80,14 @@ class TrivialPurfuit(tk.Tk):
         player3_name.grid(row=3, column=1, columnspan=8, sticky='w')
         player4_name = tk.Entry(entry_frame, textvariable=player4, bd=5)
         player4_name.grid(row=4, column=1, columnspan=8, sticky='w')
+
+        player_entries = [player1_name, player2_name, player3_name, player4_name]
+
+        # Initiate game start
+        start_game = tk.Button(entry_frame, text="Start Game", font=helvetica_20, bg=Color.LIGHT_GREEN.description,
+                               fg=Color.BLACK.description,
+                               command=lambda: begin_game(player_entries, players, names, turn))
+        start_game.grid(row=5, column=1, sticky='e')
 
         # instantiate question bank, players, turn and player objects
         question_files = [config('CATEGORY1_FILE'), config('CATEGORY2_FILE'),
@@ -181,7 +189,7 @@ class TrivialPurfuit(tk.Tk):
 
         create_game_board(
             tk_button=tk.Button,
-            frame=buttons_frame,
+            board_frame=buttons_frame,
             question_label=question_label,
             font_type=helvetica_20,
             start_row=0,
@@ -193,6 +201,9 @@ class TrivialPurfuit(tk.Tk):
             question_bank=question_bank
         )
 
+        for child in buttons_frame.winfo_children():
+            child.configure(state='disable')
+
         canvas_board_game.create_window((0, 0), window=buttons_frame, anchor=tk.NW)
 
         buttons_frame.update_idletasks()
@@ -203,6 +214,32 @@ class TrivialPurfuit(tk.Tk):
         dw, dh = int((w / COLUMNS) * DISPLAY_COLUMNS), int((h / ROWS) * DISPLAY_ROWS)
         canvas_board_game.configure(scrollregion=bbox, width=dw, height=dh)
 
+def begin_game(player_entries, players, names, turn):
+    """
+    Method to start game, lock in player names, enable die roll, enable game board
+
+    :param player_entries: array of player tk entries
+    :type: array of Tk Entry objects
+    :param players: dict of all players with keys being 1, 2, 3, 4
+    :type: dict of Player objects
+    :param names: dict of player names with keys being 1, 2, 3, 4
+    :type: dict of str
+    :param turn: The current player as represented by Turn object
+    :type: Turn object
+    """
+
+    for key in players:
+        this_player = players[key]
+        this_name = names[key].get()
+        if this_name != '':
+            this_player.name = this_name
+
+    for entry in player_entries:
+        entry.config(state='disable')
+
+    update_turn(players, turn)
+    enable_die_roll()
+    enable_game_board()
 
 if __name__ == "__main__":
     app = TrivialPurfuit("Trivial Purfuit by Software Titans")

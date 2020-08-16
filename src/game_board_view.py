@@ -9,23 +9,7 @@ The button system for our board game was inspired by abhishek305. “abhishek305
 GitHub, github.com/abhishek305/Tic-Tac-Toe-Game-in-python-3-Tkinter/blob/master/my tic tac 2.py.
 """
 
-
-def add_player_names_to_player_objects(players, names):
-    """
-    Method to player names to the Player object. This method is triggered by a lambda function so checks to see if
-    player name is updated in the entry view
-
-    :param players: dict of all players with keys being 1, 2, 3, 4
-    :type: dict of Player objects
-    :param names: dict of player names with keys being 1, 2, 3, 4
-    :type: dict of str
-    """
-    for key in players:
-        this_player = players[key]
-        this_name = names[key].get()
-        if this_name != '':
-            this_player.name = this_name
-
+frame = ''
 
 def board_square_click(players, names, turn, button, tk_label, tk_button, question_bank):
     """
@@ -43,7 +27,7 @@ def board_square_click(players, names, turn, button, tk_label, tk_button, questi
     :type: Button
     :return:
     """
-    add_player_names_to_player_objects(players, names)
+
     board_labels = {'Roll Again', 'CENTER', config('CATEGORY1_COLOR').upper() , config('CATEGORY2_COLOR').upper(), config('CATEGORY3_COLOR').upper(), config('CATEGORY4_COLOR').upper()}
     if button['text'] == ' ' and not (button['text'] in board_labels):
         button['text'] = players[turn.player_turn].name
@@ -56,13 +40,13 @@ def board_square_click(players, names, turn, button, tk_label, tk_button, questi
         display_question(Color.return_color_from_hex(button['highlightbackground']), tk_label, tk_button, question_bank, players, turn, button['text'])
     elif button['text'] != ' ' and (button['text'].startswith('*')):
         button['text'] = re.sub(r'^{0}'.format(re.escape('*')), '', button['text']).split('\n')[0]
-        display_question(Color.return_color_from_hex(button['highlightbackground']), tk_label, tk_button, question_bank, players, turn, button['text'])
+        #display_question(Color.return_color_from_hex(button['highlightbackground']), tk_label, tk_button, question_bank, players, turn, button['text'])
     elif button['text'] != ' ' and not (button['text'].startswith('*') and button['text'] in board_labels):
         button['text'] = ' '
-        display_question(Color.return_color_from_hex(button['highlightbackground']), tk_label, tk_button, question_bank, players, turn, button['text'])
+        #display_question(Color.return_color_from_hex(button['highlightbackground']), tk_label, tk_button, question_bank, players, turn, button['text'])
 
 
-def create_game_board(tk_button, frame, question_label, font_type, start_row, sq_dim, players, names, turn,
+def create_game_board(tk_button, board_frame, question_label, font_type, start_row, sq_dim, players, names, turn,
                       question_button, question_bank):
     """
     Method representing the board game view. Each row and button is individually created.
@@ -72,7 +56,7 @@ def create_game_board(tk_button, frame, question_label, font_type, start_row, sq
     :param question_button: 
     :param tk_button: Tkinter Button object
     :type: Button
-    :param frame: The Frame in which to create the game board
+    :param board_frame: The Frame in which to create the game board
     :type: Frame
     :param question_label: The Label containing the currently displayed question
     :type: Label
@@ -89,6 +73,11 @@ def create_game_board(tk_button, frame, question_label, font_type, start_row, sq
     :param turn: The current player as represented by Turn object
     :type: Turn object
     """
+
+    global frame
+
+    frame = board_frame;
+
     # row 1
     row1_sq1 = tk_button(frame, text=' ', font=font_type,
                          highlightbackground=Color.return_hex_from_color(config('CATEGORY1_COLOR')),
@@ -385,3 +374,8 @@ def display_question(color_type, tk_label, tk_button, question_bank, players, tu
             tk_label.configure(text=' ')
     except AttributeError:
         print("issue fetching question")
+
+def enable_game_board():
+    global frame
+    for child in frame.winfo_children():
+        child.configure(state='normal')
