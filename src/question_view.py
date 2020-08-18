@@ -40,6 +40,8 @@ def show_answer(question_obj, players, turn, color_type, button_text):
                     players[turn.player_turn].slices.category3 = True
                 elif color_type == config('CATEGORY4_COLOR') and button_text[0] == '*':
                     players[turn.player_turn].slices.category4 = True
+                elif color_type == config('CENTER_COLOR') and button_text[0] == '*':
+                    messagebox.showinfo("WHOOOOOO!", "CONGRATULATIONS! You win the game.")
         else:
             turn.increment_player_turn(len(players))
             update_turn(players, turn)

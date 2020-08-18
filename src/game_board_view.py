@@ -1,5 +1,6 @@
 import re
 from decouple import config
+import random
 
 from src.models.Color import Color
 from src.question_view import show_answer
@@ -206,7 +207,8 @@ def create_game_board(tk_button, board_frame, question_label, font_type, start_r
     row4_sq3.grid(row=start_row + 3, column=3)
 
     row4_sq4 = tk_button(frame, text='CENTER', font=font_type,
-                         highlightbackground=Color.PURPLE.description, bg=Color.PURPLE.description, height=sq_dim,
+                         highlightbackground=Color.return_hex_from_color(config('CENTER_COLOR')),
+                         bg=Color.return_hex_from_color(config('CENTER_COLOR')), height=sq_dim,
                          width=sq_dim,
                          command=lambda: board_square_click(players, names, turn, row4_sq4, question_label,
                                                             question_button, question_bank))
@@ -353,6 +355,8 @@ def display_question(color_type, tk_label, tk_button, question_bank, players, tu
 
     category4_questions = question_bank.category4_questions
 
+    question_random_list = [category1_questions, category2_questions, category3_questions, category4_questions]
+
     try:
         if color_type == config('CATEGORY1_COLOR'):
             question = question_bank.pick_random_question(category1_questions)
@@ -368,6 +372,12 @@ def display_question(color_type, tk_label, tk_button, question_bank, players, tu
             tk_button.configure(command=lambda: show_answer(question, players, turn, color_type, button_text))
         elif color_type == config('CATEGORY4_COLOR'):
             question = question_bank.pick_random_question(category4_questions)
+            tk_label.configure(text=question.question)
+            tk_button.configure(command=lambda: show_answer(question, players, turn, color_type, button_text))
+        elif color_type == config('CENTER_COLOR'):
+            select = random.randint(0, len(question_random_list) - 1)
+            question_category = question_random_list[select]
+            question = question_bank.pick_random_question(question_category)
             tk_label.configure(text=question.question)
             tk_button.configure(command=lambda: show_answer(question, players, turn, color_type, button_text))
         else:
