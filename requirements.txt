@@ -1,5 +1,5 @@
 colour==0.1.5
 numpy==1.19.0
-Pillow==7.1.2
+Pillow==9.0.0
 python-decouple==3.3
 tkmacosx==0.1.3
